@@ -71,7 +71,7 @@ public class AnalizadorDeDna {
 	 *                        encontraron
 	 * @return
 	 */
-	public int analizarCadena(char[] cadena, int posicionInicial, int cantidadActual) {
+	private int analizarCadena(char[] cadena, int posicionInicial, int cantidadActual) {
 		char primerValor = cadena[posicionInicial];
 		int cantidadDeLetrasIguales = 0;
 		if (posicionInicial + 4 > cadena.length)
