@@ -33,7 +33,7 @@ public class AnalizadorDeDna {
 	/**
 	 * Analiza si el DNA ingresado es mutante o humano
 	 * 
-	 * @param dnaParaAnalizar
+	 * @param dnaParaAnalizar arreglo de String que se va a analizar
 	 * @return devuelve verdadero si el Dna es mutante y Falso si el Dna es humano
 	 * @throws CadenaDeDiferentesTamañosException se lanza cuando se valida que el
 	 *                                            Dna esta formado por palabras de
@@ -51,12 +51,10 @@ public class AnalizadorDeDna {
 
 			List<char[]> listaDeCadenas = generadorDeCadenasDeAdn.armarCadenasDeAdn(dnaParaAnalizar);
 
-			for (char[] valoresDeAdns : listaDeCadenas) {
-				if (analizarCadena(valoresDeAdns, 0)) {
-					cantidadDeCadenas = cantidadDeCadenas + 1;
-					if (cantidadDeCadenas == 2) {
-						return true;
-					}
+			for (char[] cadenaDeAdn : listaDeCadenas) {
+				cantidadDeCadenas = cantidadDeCadenas+analizarCadena(cadenaDeAdn, 0, cantidadDeCadenas);
+				if (cantidadDeCadenas == 2) {
+					return true;
 				}
 			}
 		}
@@ -64,28 +62,33 @@ public class AnalizadorDeDna {
 	}
 
 	/**
-	 * Recibe una cadena para controlar si tiene 4 letras iguales consecutivas
+	 * Recibe y cuenta hasta dos ocurrencias grupos de 4 letras iguales.
 	 * 
-	 * @param cadena
-	 * @param posicionInicial
-	 * @return devuelve verdadero si la cadena tiene 4 letras iguales consecutivas
-	 *         de caso contrario devuelve falso.
+	 * @param cadena          string para analizar
+	 * @param posicionInicial lugar desde donde se comienza a analizar el arreglo de
+	 *                        letras
+	 * @param cantidadActual  cantidad de cuatro letras consecutivas que se
+	 *                        encontraron
+	 * @return
 	 */
-	private boolean analizarCadena(char[] cadena, int posicionInicial) {
+	public int analizarCadena(char[] cadena, int posicionInicial, int cantidadActual) {
 		char primerValor = cadena[posicionInicial];
-		int cantidadDeCadenasIguales = 0;
+		int cantidadDeLetrasIguales = 0;
 		if (posicionInicial + 4 > cadena.length)
-			return false;
+			return 0;
 		for (int j = posicionInicial; j < cadena.length; j++) {
 			if (cadena[j] == primerValor) {
-				cantidadDeCadenasIguales = cantidadDeCadenasIguales + 1;
-				if (cantidadDeCadenasIguales == 4)
-					return true;
+				cantidadDeLetrasIguales = cantidadDeLetrasIguales + 1;
+				if (cantidadDeLetrasIguales == 4 && ((j + 4) <= cadena.length) && cantidadActual + 1 < 2) {
+					return 1 + analizarCadena(cadena, j + 1, cantidadActual + 1);
+				} else if (cantidadDeLetrasIguales == 4) {
+					return 1;
+				}
 			} else {
-				return analizarCadena(cadena, posicionInicial + 1);
+				return analizarCadena(cadena, posicionInicial + 1, cantidadActual);
 			}
 		}
-		return false;
+		return 0;
 	};
 
 	/**
