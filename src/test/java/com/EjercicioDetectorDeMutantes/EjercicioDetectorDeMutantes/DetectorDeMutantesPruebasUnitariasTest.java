@@ -39,7 +39,7 @@ public class DetectorDeMutantesPruebasUnitariasTest {
 		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha());
 		AnalizadorDeDna analizadorDeDna = new AnalizadorDeDna(listaDeGeneradoresdeCadenas);
 
-		String[] dna = { "ATGCGA","ATGCGA","ATGCGA","ATGCGG","ATGCGA" ,"ATGCGT" };
+		String[] dna = { "AAAAGGGG","ATGCGAGA","ATGCGATT","ATGCGGGG","ATGCGAAA" ,"ATGCGTCC","ATGCGAAA" ,"ATGCGTCC" };
 		assertTrue(analizadorDeDna.esMutante(dna));
 	}
 
