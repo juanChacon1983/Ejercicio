@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResultadoDeAnalisisServiciosIntegracionTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes</a> &gt; <span class="el_source">ResultadoDeAnalisisServiciosIntegracionTest.java</span></div><h1>ResultadoDeAnalisisServiciosIntegracionTest.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
+
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.Servicios.ResultadoDeAnalisisServicios;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.ResultadoDeAnalisis;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.repositorio.ResultadoDeAnalisisRepositorio;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+
+/**
+ * Clase para testear la capa de servicios de los resultados de analisis
+ * 
+ * @author jchacon
+ *
+ */
+@RunWith(SpringRunner.class)
+<span class="fc" id="L33">public class ResultadoDeAnalisisServiciosIntegracionTest {</span>
+
+	@TestConfiguration
+<span class="fc" id="L36">	static class EmployeeServiceImplTestContextConfiguration {</span>
+
+		@Bean
+		public ResultadoDeAnalisisServicios resultadoDeAnalisisServicios() {
+<span class="fc" id="L40">			return new ResultadoDeAnalisisServicios();</span>
+		}
+	}
+
+	@Autowired
+	private ResultadoDeAnalisisServicios resultadoDeAnalisisServicios;
+
+	@MockBean
+	private ResultadoDeAnalisisRepositorio resultadoDeAnalisisRepositorio;
+
+	/**
+	 * Configuracion inicial antes de comenzar los test
+	 */
+	@Before
+	public void setUp() {
+
+<span class="fc" id="L56">		ResultadoDeAnalisis resultadoDeAnalisis = new ResultadoDeAnalisis();</span>
+<span class="fc" id="L57">		resultadoDeAnalisis.setId(1);</span>
+<span class="fc" id="L58">		resultadoDeAnalisis.setDna(&quot;ATGCGAG&quot;);</span>
+<span class="fc" id="L59">		resultadoDeAnalisis.setEsMutante(true);</span>
+
+<span class="fc" id="L61">		ResultadoDeAnalisis otroResultadoDeAnalisis = new ResultadoDeAnalisis();</span>
+<span class="fc" id="L62">		otroResultadoDeAnalisis.setId(2);</span>
+<span class="fc" id="L63">		otroResultadoDeAnalisis.setDna(&quot;ATGCGA&quot;);</span>
+<span class="fc" id="L64">		otroResultadoDeAnalisis.setEsMutante(true);</span>
+
+<span class="fc" id="L66">		List&lt;ResultadoDeAnalisis&gt; listaDeResultados = new ArrayList&lt;ResultadoDeAnalisis&gt;(</span>
+<span class="fc" id="L67">				Arrays.asList(resultadoDeAnalisis, otroResultadoDeAnalisis));</span>
+
+<span class="fc" id="L69">		Mockito.when(resultadoDeAnalisisRepositorio.findById((long) 1)).thenReturn(Optional.of(resultadoDeAnalisis));</span>
+<span class="fc" id="L70">		Mockito.when(resultadoDeAnalisisRepositorio.findByDna(&quot;ATGCGAG&quot;)).thenReturn(resultadoDeAnalisis);</span>
+<span class="fc" id="L71">		Mockito.when(resultadoDeAnalisisRepositorio.findAll()).thenReturn(listaDeResultados);</span>
+<span class="fc" id="L72">		Mockito.when(resultadoDeAnalisisRepositorio.saveAndFlush(Mockito.any(ResultadoDeAnalisis.class)))</span>
+<span class="fc" id="L73">				.thenReturn(resultadoDeAnalisis);</span>
+
+<span class="fc" id="L75">	}</span>
+
+	/**
+	 * Test que consulta un resultado de Analsis por id
+	 */
+	@Test
+	public void quieroBuscarUnResultadoDeanalaisisPorIdTest() {
+
+<span class="fc" id="L83">		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios.consultaPorID(1).get();</span>
+<span class="fc" id="L84">		assertThat(resultadoDeAnalisis.getId()).isEqualTo(1);</span>
+<span class="fc" id="L85">	}</span>
+	
+	/**
+	 * Test que consulta un resultado de Analsis por cadena de Dna
+	 */
+	@Test
+	public void quieroBuscarUnResultadoDeanalaisisPorDnaTest() {
+
+<span class="fc" id="L93">		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios.consultaPorCadenaDeDna(&quot;ATGCGAG&quot;);</span>
+<span class="fc" id="L94">		assertThat(resultadoDeAnalisis.getDna()).isEqualTo(&quot;ATGCGAG&quot;);</span>
+<span class="fc" id="L95">	}</span>
+
+	/**
+	 * Test para el metodo eliminar un Resultado de Analsis
+	 */
+	@Test
+	public void quieroEliminarUnResultadoDeAnalisisQueConsultoYQueSeElimineUnSoloRegistroTest() {
+
+<span class="fc" id="L103">		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios.consultaPorID(1).get();</span>
+<span class="fc" id="L104">		resultadoDeAnalisisServicios.eliminar(resultadoDeAnalisis);</span>
+<span class="fc" id="L105">		Mockito.verify(resultadoDeAnalisisRepositorio, times(1)).delete(resultadoDeAnalisis);</span>
+
+<span class="fc" id="L107">	}</span>
+ 
+
+	/**
+	 * Test para consultar todos los Resultados de Analisis guardados en la BD
+	 */
+	@Test
+	public void consultarTodosLosResultadosDeAdnTest() {
+
+<span class="fc" id="L116">		List&lt;ResultadoDeAnalisis&gt; resultados = resultadoDeAnalisisServicios.listar();</span>
+<span class="fc" id="L117">		assertThat(resultados.size()).isGreaterThan(0);</span>
+
+<span class="fc" id="L119">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</div></body></html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DetectorDeMutantesPruebasUnitariasTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes</a> &gt; <span class="el_source">DetectorDeMutantesPruebasUnitariasTest.java</span></div><h1>DetectorDeMutantesPruebasUnitariasTest.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+ 
+
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.CadenaDeDiferentesTamañosException;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.DnaMalFormadoException;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.AnalizadorDeDna;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDna;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDnaHorizontal;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDnaVertical;
+ 
+
+ 
+ 
+<span class="fc" id="L23">public class DetectorDeMutantesPruebasUnitariasTest {</span>
+
+	/**
+	 * Test para comprobar que cuando se analiza un dna mutante devuelve verdadero
+	 * 
+	 * @throws CadenaDeDiferentesTamañosException
+	 * @throws DnaMalFormadoException
+	 */
+	@Test
+	public void quieroAnalizarUnaDnaMutanteYElResultadoSeaVerdaderoTest()
+			throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+
+<span class="fc" id="L35">		List&lt;GeneradorDeCadenasDeDna&gt; listaDeGeneradoresdeCadenas = new ArrayList&lt;GeneradorDeCadenasDeDna&gt;();</span>
+<span class="fc" id="L36">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaHorizontal());</span>
+<span class="fc" id="L37">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaVertical());</span>
+<span class="fc" id="L38">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda());</span>
+<span class="fc" id="L39">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha());</span>
+<span class="fc" id="L40">		AnalizadorDeDna analizadorDeDna = new AnalizadorDeDna(listaDeGeneradoresdeCadenas);</span>
+
+<span class="fc" id="L42">		String[] dna = { &quot;AAAAGGGG&quot;,&quot;ATGCGAGA&quot;,&quot;ATGCGATT&quot;,&quot;ATGCGGGG&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot; };</span>
+<span class="fc" id="L43">		assertTrue(analizadorDeDna.esMutante(dna));</span>
+<span class="fc" id="L44">	}</span>
+
+	/**
+	 * Test para comprobar que cuando se analiza una cadena Humana devuelve falso
+	 * 
+	 * @throws CadenaDeDiferentesTamañosException
+	 * @throws DnaMalFormadoException
+	 */
+	@Test
+	public void quieroAnalizarUnaDnaHumanoYElResultadoSeaFalsoTest()
+			throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+
+<span class="fc" id="L56">		List&lt;GeneradorDeCadenasDeDna&gt; listaDeGeneradoresdeCadenas = new ArrayList&lt;GeneradorDeCadenasDeDna&gt;();</span>
+<span class="fc" id="L57">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaHorizontal());</span>
+<span class="fc" id="L58">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaVertical());</span>
+<span class="fc" id="L59">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda());</span>
+<span class="fc" id="L60">		listaDeGeneradoresdeCadenas.add(new GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha());</span>
+<span class="fc" id="L61">		AnalizadorDeDna analizadorDeDna = new AnalizadorDeDna(listaDeGeneradoresdeCadenas);</span>
+
+<span class="fc" id="L63">		String[] dna = { &quot;GACCCG&quot;, &quot;CAGGGC&quot;, &quot;TTATGT&quot;, &quot;AGAGGT&quot;, &quot;TACTGT&quot;, &quot;ACCCTG&quot; };</span>
+<span class="fc" id="L64">		assertFalse(analizadorDeDna.esMutante(dna));</span>
+<span class="fc" id="L65">	}</span>
+
+	/**
+	 * Test para comprobar que cuando se analiza un dna con palabras de diferente
+	 * tamaño se lanza la excepcion CadenaDeDiferentesTamañosException
+	 * 
+	 * @throws CadenaDeDiferentesTamañosException
+	 * @throws DnaMalFormadoException
+	 */
+	@Test(expected = CadenaDeDiferentesTamañosException.class)
+	public void quieroAnalizarUnDnaConPalabrasDeDiferentesTamañosYQueElSeLanceLaExcepcioCadenaDeDiferentesTamañosExceptionnTest()throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+
+<span class="fc" id="L77">		AnalizadorDeDna analizadorDeDna = new AnalizadorDeDna();</span>
+
+<span class="fc" id="L79">		String[] dna = { &quot;ATGCGA&quot;, &quot;CAGGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot; };</span>
+<span class="nc" id="L80">		assertTrue(analizadorDeDna.esMutante(dna));</span>
+<span class="nc" id="L81">	}</span>
+
+	/**
+	 * Test para comprobar que cuando se analiza un dna donde las palabras tienen
+	 * mas letras que la cantidad total de palabras se lanza la excepcion
+	 * DnaMalFormadoException
+	 * 
+	 * @throws CadenaDeDiferentesTamañosException
+	 * @throws DnaMalFormadoException
+	 */
+	@Test(expected = DnaMalFormadoException.class)
+	public void quieroAnalizarUnDnaInvalidoYQueElSeLanceLaExcepcioDnaMalFormadoExceptionTest() throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+
+<span class="fc" id="L94">		AnalizadorDeDna analizadorDeDna = new AnalizadorDeDna();</span>
+
+<span class="fc" id="L96">		String[] dna = { &quot;ATGCGA&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot; };</span>
+<span class="nc" id="L97">		assertTrue(analizadorDeDna.esMutante(dna));</span>
+<span class="nc" id="L98">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</div></body></html>
