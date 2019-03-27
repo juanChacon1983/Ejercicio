@@ -1,48 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo</a> &gt; <span class="el_source">GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</span></div><h1>GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (27/03/2019 15:52:34)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo</a> &gt; <span class="el_source">GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</span></div><h1>GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-<span class="fc" id="L6">public class GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda implements GeneradorDeCadenasDeDna {</span>
+<span class="fc" id="L6">public class GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda extends GeneradorDeCadenasDeDna {</span>
 
 	@Override
-	public List&lt;char[]&gt; armarCadenasDeAdn(String[] dna) {
-<span class="fc" id="L10">		List&lt;char[]&gt; listaDeCadenas = new ArrayList&lt;char[]&gt;();</span>
+	public List&lt;String&gt; armarCadenasDeAdn(String[] dna) {
+<span class="fc" id="L10">		List&lt;String&gt; listaDeCadenas = new ArrayList&lt;String&gt;();</span>
 
-<span class="fc" id="L12">		char[][] listaDeCadenasTemporal = new char[dna.length][dna[0].length()];</span>
-<span class="fc bfc" id="L13" title="All 2 branches covered.">		for (int i = 0; i &lt; dna.length; i++) {</span>
-<span class="fc" id="L14">			listaDeCadenasTemporal[i]= dna[i].toCharArray();</span>
-		}
- 
-
-<span class="fc bfc" id="L18" title="All 2 branches covered.">		for (int j = 3; j &lt; listaDeCadenasTemporal.length; j++) {</span>
-
-<span class="fc" id="L20">			int posicionActual = 0;</span>
-<span class="fc" id="L21">			char[] temp = new char[listaDeCadenasTemporal.length];</span>
-<span class="fc" id="L22">			int altura = j;</span>
-<span class="fc bfc" id="L23" title="All 2 branches covered.">			for (int i = listaDeCadenasTemporal.length-1;  altura &gt;= 0; i--) {</span>
-<span class="fc" id="L24">				temp[posicionActual] = listaDeCadenasTemporal[altura][i];</span>
-<span class="fc" id="L25">				altura = altura-1;</span>
-<span class="fc" id="L26">				posicionActual =  posicionActual +1;</span>
+<span class="fc" id="L12">		char[][] matrizTemporal = generarMatriz (dna);</span>
+		
+<span class="fc bfc" id="L14" title="All 2 branches covered.">		for (int j = 3; j &lt; matrizTemporal.length; j++) {</span>
+<span class="fc" id="L15">			StringBuffer temp = new StringBuffer();</span>
+<span class="fc" id="L16">			int altura = j;</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">			for (int i = matrizTemporal.length - 1; altura &gt;= 0; i--) {</span>
+<span class="fc" id="L18">				temp.append(matrizTemporal[altura][i]);</span>
+<span class="fc" id="L19">				altura = altura - 1;</span>
 			}
-<span class="fc" id="L28">			listaDeCadenas.add(temp);</span>
+<span class="fc" id="L21">			listaDeCadenas.add(temp.toString());</span>
 
 		}
- 
 
-<span class="fc bfc" id="L33" title="All 2 branches covered.">		for (int j = listaDeCadenasTemporal.length-2; (j-3) &gt;= 0; j--) {</span>
-<span class="fc" id="L34">			char[] temp = new char[listaDeCadenasTemporal.length];</span>
-<span class="fc" id="L35">			int posicionActual = 0;</span>
-<span class="fc" id="L36"> 			int base = j;</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">			for (int i = listaDeCadenasTemporal.length-1; base &gt;= 0; i--) {</span>
-<span class="fc" id="L38">				temp[posicionActual] = listaDeCadenasTemporal[i][base];</span>
-<span class="fc" id="L39">				base = base-1;</span>
-<span class="fc" id="L40">				posicionActual =  posicionActual +1;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">		for (int j = matrizTemporal.length - 2; (j - 3) &gt;= 0; j--) {</span>
+<span class="fc" id="L26">			StringBuffer temp = new StringBuffer();</span>
+<span class="fc" id="L27">			int base = j;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">			for (int i = matrizTemporal.length - 1; base &gt;= 0; i--) {</span>
+<span class="fc" id="L29">				temp.append(matrizTemporal[i][base]);</span>
+<span class="fc" id="L30">				base = base - 1;</span>
 			}
-<span class="fc" id="L42">			listaDeCadenas.add(temp);</span>
+<span class="fc" id="L32">			listaDeCadenas.add(temp.toString());</span>
 		}
 
-<span class="fc" id="L45">		return listaDeCadenas;</span>
+<span class="fc" id="L35">		return listaDeCadenas;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>EjercicioDetectorDeMutantes (4) (26/03/2019 20:45:32)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (27/03/2019 15:52:34)</div></body></html>

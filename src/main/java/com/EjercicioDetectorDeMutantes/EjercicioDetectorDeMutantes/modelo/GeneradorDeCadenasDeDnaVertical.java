@@ -5,26 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GeneradorDeCadenasDeDnaVertical implements  GeneradorDeCadenasDeDna{
+public class GeneradorDeCadenasDeDnaVertical extends  GeneradorDeCadenasDeDna{
 
  
 	@Override
-	public List<char[]> armarCadenasDeAdn(String[] dna) {
-		List<char[]> listaDeCadenas = new ArrayList<char[]>();
+	public List<String> armarCadenasDeAdn(String[] dna) {
+		List<String> listaDeCadenas = new ArrayList<String>();
 		
-		char[][] listaDeCadenasTemporal = new char[dna.length][dna.length];
-
-		for (int i = 0; i < dna.length; i++) {
-			listaDeCadenasTemporal[i]= dna[i].toCharArray();
-		}
+		char[][] matrizTemporal = generarMatriz (dna);
 		
-		
-		for (int i = 0; i < listaDeCadenasTemporal.length; i++) {
-			char[] temp = new char[listaDeCadenasTemporal.length];
-			for (int j = 0; j < listaDeCadenasTemporal.length; j++) {
-				temp[j] =   listaDeCadenasTemporal[j][i];
+		for (int i = 0; i < matrizTemporal.length; i++) {
+			StringBuffer temp = new StringBuffer();
+			for (int j = 0; j < matrizTemporal.length; j++) {
+				temp.append(matrizTemporal[j][i]);
 			}
-			listaDeCadenas.add(temp);
+			listaDeCadenas.add(temp.toString());
 		}
 		
 		return listaDeCadenas;

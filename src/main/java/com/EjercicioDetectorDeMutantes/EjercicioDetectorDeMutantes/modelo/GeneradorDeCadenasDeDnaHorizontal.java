@@ -4,16 +4,16 @@ package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneradorDeCadenasDeDnaHorizontal implements GeneradorDeCadenasDeDna {
+public class GeneradorDeCadenasDeDnaHorizontal extends GeneradorDeCadenasDeDna {
 
  
 
 	@Override
-	public List<char[]> armarCadenasDeAdn(String[] dna) {
-		List<char[]> listaDeCadenas = new ArrayList<char[]>();
+	public List<String> armarCadenasDeAdn(String[] dna) {
+		List<String> listaDeCadenas = new ArrayList<String>();
 
 		for (String valoresDeAdns : dna) {
-			listaDeCadenas.add(valoresDeAdns.toCharArray());
+			listaDeCadenas.add(valoresDeAdns);
 		};
 		
 		return listaDeCadenas;

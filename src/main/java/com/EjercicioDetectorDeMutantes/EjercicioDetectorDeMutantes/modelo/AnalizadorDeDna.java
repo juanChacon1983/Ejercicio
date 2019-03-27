@@ -1,6 +1,8 @@
 package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,10 +50,10 @@ public class AnalizadorDeDna {
 		int cantidadDeCadenas = 0;
 		for (GeneradorDeCadenasDeDna generadorDeCadenasDeAdn : listaDeGeneradoresdeCadenas) {
 
-			List<char[]> listaDeCadenas = generadorDeCadenasDeAdn.armarCadenasDeAdn(dnaParaAnalizar);
+			List<String> listaDeCadenas = generadorDeCadenasDeAdn.armarCadenasDeAdn(dnaParaAnalizar);
 
-			for (char[] cadenaDeAdn : listaDeCadenas) {
-				cantidadDeCadenas = cantidadDeCadenas+analizarCadena(cadenaDeAdn, 0, cantidadDeCadenas);
+			for (String cadenaDeAdn : listaDeCadenas) {
+				cantidadDeCadenas = cantidadDeCadenas + analizarCadena(cadenaDeAdn, cantidadDeCadenas);
 				if (cantidadDeCadenas == 2) {
 					return true;
 				}
@@ -70,24 +72,16 @@ public class AnalizadorDeDna {
 	 *                        encontraron
 	 * @return
 	 */
-	private int analizarCadena(char[] cadena, int posicionInicial, int cantidadActual) {
-		char primerValor = cadena[posicionInicial];
-		int cantidadDeLetrasIguales = 0;
-		if (posicionInicial + 4 > cadena.length)
-			return 0;
-		for (int j = posicionInicial; j < cadena.length; j++) {
-			if (cadena[j] == primerValor) {
-				cantidadDeLetrasIguales = cantidadDeLetrasIguales + 1;
-				if (cantidadDeLetrasIguales == 4 && ((j + 4) <= cadena.length) && cantidadActual + 1 < 2) {
-					return 1 + analizarCadena(cadena, j + 1, cantidadActual + 1);
-				} else if (cantidadDeLetrasIguales == 4) {
-					return 1;
-				}
-			} else {
-				return analizarCadena(cadena, posicionInicial + 1, cantidadActual);
-			}
+	private int analizarCadena(String cadena, int cantidadActual) {
+		String regex = "(.)\\1{3}";
+		int cadenasEncontradas = 0;
+		Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+		Matcher matcher = pattern.matcher(cadena);
+
+		while (matcher.find() && cadenasEncontradas+cantidadActual != 2) {
+			cadenasEncontradas = cadenasEncontradas+1;
 		}
-		return 0;
+		return cadenasEncontradas;
 	};
 
 	/**
