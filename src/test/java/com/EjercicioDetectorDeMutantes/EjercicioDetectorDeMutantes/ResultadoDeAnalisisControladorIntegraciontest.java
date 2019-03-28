@@ -93,8 +93,9 @@ public class ResultadoDeAnalisisControladorIntegraciontest {
 		ObjectMapper mapper = new ObjectMapper();
 
 		DnaDTO dnaDTO = new DnaDTO();
-		dnaDTO.setDna(Arrays.asList("ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTT"));
-
+		//dnaDTO.setDna(Arrays.asList("ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTT"));
+		dnaDTO.setDna(Arrays.asList("AAAAGGGG","ATGCGAGA","ATGCGATT","ATGCGGGG","ATGCGAAA" ,"ATGCGTCC","ATGCGAAA" ,"ATGCGTCC"));
+		 
 		mvc.perform(post("/mutant").content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 

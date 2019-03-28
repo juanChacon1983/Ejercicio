@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResultadoDeAnalisisControladorIntegraciontest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (27/03/2019 15:52:34)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes</a> &gt; <span class="el_source">ResultadoDeAnalisisControladorIntegraciontest.java</span></div><h1>ResultadoDeAnalisisControladorIntegraciontest.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResultadoDeAnalisisControladorIntegraciontest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (28/03/2019 13:40:20)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes</a> &gt; <span class="el_source">ResultadoDeAnalisisControladorIntegraciontest.java</span></div><h1>ResultadoDeAnalisisControladorIntegraciontest.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.times;
@@ -93,12 +93,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 <span class="fc" id="L93">		ObjectMapper mapper = new ObjectMapper();</span>
 
 <span class="fc" id="L95">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L96">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTT&quot;));</span>
+		//dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTT&quot;));
+<span class="fc" id="L97">		dnaDTO.setDna(Arrays.asList(&quot;AAAAGGGG&quot;,&quot;ATGCGAGA&quot;,&quot;ATGCGATT&quot;,&quot;ATGCGGGG&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot;));</span>
+		 
+<span class="fc" id="L99">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L100">				.andExpect(status().isOk());</span>
 
-<span class="fc" id="L98">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L99">				.andExpect(status().isOk());</span>
-
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L102">	}</span>
 
 	/**
 	 * Se analiza un DNA humano y el servicio devuelve 403-Forbidden
@@ -107,15 +108,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngresarUnDnaYQueMeDevuelvaQueEsHumanoTest() throws Exception {
 
-<span class="fc" id="L110">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L111">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L112">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L113">		dnaDTO.setDna(Arrays.asList(&quot;ATGC&quot;, &quot;CAGT&quot;, &quot;TTAT&quot;, &quot;TTAT&quot;));</span>
+<span class="fc" id="L113">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L114">		dnaDTO.setDna(Arrays.asList(&quot;ATGC&quot;, &quot;CAGT&quot;, &quot;TTAT&quot;, &quot;TTAT&quot;));</span>
 
-<span class="fc" id="L115">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L116">				.andExpect(status().isForbidden());</span>
+<span class="fc" id="L116">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L117">				.andExpect(status().isForbidden());</span>
 
-<span class="fc" id="L118">	}</span>
+<span class="fc" id="L119">	}</span>
 
 	/**
 	 * Valida que no se puedan ingresar letras no permitidas
@@ -124,16 +125,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngrsarUnDnaConLetrasInvalidasYQueMeDevuelvaBadRequestTest() throws Exception {
 
-<span class="fc" id="L127">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L128">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L129">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L130">		dnaDTO.setDna(Arrays.asList(&quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;));</span>
+<span class="fc" id="L130">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L131">		dnaDTO.setDna(Arrays.asList(&quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;));</span>
 
-<span class="fc" id="L132">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L133">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
-<span class="fc" id="L134">				.compareTo(&quot;las unicas letras permitidas son A,T,C,G y la lista no puede estar vacialas unicas letras permitidas son A,T,C,G&quot;);</span>
+<span class="fc" id="L133">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L134">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L135">				.compareTo(&quot;las unicas letras permitidas son A,T,C,G y la lista no puede estar vacialas unicas letras permitidas son A,T,C,G&quot;);</span>
 
-<span class="fc" id="L136">	}</span>
+<span class="fc" id="L137">	}</span>
 
 	/**
 	 * Valida que no se puedan ingresar cadenas que contengan menos letras que la cantidad de palabras
@@ -142,16 +143,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngrsarUnDnaConMenosPalabrasQueCantidadDeLetrasPorPalabrasYQueMeDevuelvaBadRequestTest() throws Exception {
 
-<span class="fc" id="L145">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L146">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L147">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L148">		dnaDTO.setDna(Arrays.asList(&quot;ATGGG&quot;, &quot;CAGGG&quot;, &quot;TTAGG&quot;, &quot;TTAGG&quot;));</span>
+<span class="fc" id="L148">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L149">		dnaDTO.setDna(Arrays.asList(&quot;ATGGG&quot;, &quot;CAGGG&quot;, &quot;TTAGG&quot;, &quot;TTAGG&quot;));</span>
 
-<span class="fc" id="L150">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L151">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
-<span class="fc" id="L152">				.compareTo(&quot;el dna tiene que ser igual a la cantidad de palabras que lo componen&quot;);</span>
+<span class="fc" id="L151">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L152">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L153">				.compareTo(&quot;el dna tiene que ser igual a la cantidad de palabras que lo componen&quot;);</span>
 
-<span class="fc" id="L154">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	/**
 	 * valida que las palabras tengan por lo menos 4 caracteres
@@ -160,16 +161,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngrsarUnDnaConPalabrasDeMenosDeCuatroLetrasYQueMeDevuelvaBadRequestTest() throws Exception {
 
-<span class="fc" id="L163">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L164">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L165">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L166">		dnaDTO.setDna(Arrays.asList(&quot;ATG&quot;, &quot;CAG&quot;, &quot;TGG&quot;, &quot;TTG&quot;));</span>
+<span class="fc" id="L166">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L167">		dnaDTO.setDna(Arrays.asList(&quot;ATG&quot;, &quot;CAG&quot;, &quot;TGG&quot;, &quot;TTG&quot;));</span>
 
-<span class="fc" id="L168">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L169">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
-<span class="fc" id="L170">				.compareTo(&quot;El tamaño minimo de las cadenas es 4 caracteres&quot;);</span>
+<span class="fc" id="L169">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L170">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L171">				.compareTo(&quot;El tamaño minimo de las cadenas es 4 caracteres&quot;);</span>
  
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L173">	}</span>
 
 	/**
 	 * valida que se tenga que envias si o si una cadenas
@@ -178,13 +179,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngrsarUnDnVacioYQueMeDevuelvaBadRequestTest() throws Exception {
 
-<span class="fc" id="L181">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L182">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L183">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L184">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L185">				.andExpect(status().isBadRequest());</span>
+<span class="fc" id="L184">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L185">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L186">				.andExpect(status().isBadRequest());</span>
 
-<span class="fc" id="L187">	}</span>
+<span class="fc" id="L188">	}</span>
 
 	/**
 	 * valida que no se puedan mandar DNA formad por palabras de diferente tamaño
@@ -193,16 +194,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngrsarUnDnaConPalabrasDeDiferentesTamañosYQueMeDevuelvaBadRequestTest() throws Exception {
 
-<span class="fc" id="L196">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L197">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L198">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L199">		dnaDTO.setDna(Arrays.asList(&quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGG&quot;));</span>
+<span class="fc" id="L199">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L200">		dnaDTO.setDna(Arrays.asList(&quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGG&quot;));</span>
 
-<span class="fc" id="L201">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L202">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
-<span class="fc" id="L203">				.compareTo(&quot;El tamaño de las cadenas de adn tiene que ser igual&quot;);</span>
+<span class="fc" id="L202">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L203">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L204">				.compareTo(&quot;El tamaño de las cadenas de adn tiene que ser igual&quot;);</span>
 
-<span class="fc" id="L205">	}</span>
+<span class="fc" id="L206">	}</span>
 	
 	/**
 	 * Valida que si consulta dos veces la misma cadena devuelve el mismo resultado
@@ -211,18 +212,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroIngresarDosVecesElMismoDnaYDaElMismoResultadoBDTest() throws Exception {
 
-<span class="fc" id="L214">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L215">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L216">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L217">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
+<span class="fc" id="L217">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L218">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
 
-<span class="fc" id="L219">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L220">				.andExpect(status().isOk());</span>
+<span class="fc" id="L220">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L221">				.andExpect(status().isOk());</span>
 		
-<span class="fc" id="L222">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L223">		.andExpect(status().isOk());</span>
+<span class="fc" id="L223">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L224">		.andExpect(status().isOk());</span>
 		
-<span class="fc" id="L225">	}</span>
+<span class="fc" id="L226">	}</span>
 	
 	/**
 	 * Valida que el servicio de los stats devuelve 400
@@ -230,9 +231,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	 */
 	@Test
 	public void quieroConsultarLasEstadisticasYQueMeDevuelva200OKTest() throws Exception {
-<span class="fc" id="L233">		mvc.perform(get(&quot;/stats&quot;).contentType(MediaType.APPLICATION_JSON_VALUE))</span>
-<span class="fc" id="L234">		 .andExpect(status().isOk());</span>
-<span class="fc" id="L235">	}</span>
+<span class="fc" id="L234">		mvc.perform(get(&quot;/stats&quot;).contentType(MediaType.APPLICATION_JSON_VALUE))</span>
+<span class="fc" id="L235">		 .andExpect(status().isOk());</span>
+<span class="fc" id="L236">	}</span>
 	
 	/**
 	 * Valida que cuando ejecuto un servicio que ya existe en la BD no vuelva a hacer el calculo y me devuelva el resultado anterior
@@ -241,17 +242,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 	@Test
 	public void quieroQueCuandoIngreseUnDnaQueExisteEnLaBDNoloGuardeNuevamenteTest() throws Exception {
 
-<span class="fc" id="L244">		ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L245">		ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L246">		DnaDTO dnaDTO = new DnaDTO();</span>
-<span class="fc" id="L247">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
+<span class="fc" id="L247">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L248">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
 
-<span class="fc" id="L249">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
-<span class="fc" id="L250">				.andExpect(status().isOk());</span>
+<span class="fc" id="L250">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L251">				.andExpect(status().isOk());</span>
 		
-<span class="fc" id="L252">		Mockito.verify(resultadoDeAnalisisServicios, times(0)).guardar(Mockito.any(ResultadoDeAnalisis.class));</span>
+<span class="fc" id="L253">		Mockito.verify(resultadoDeAnalisisServicios, times(0)).guardar(Mockito.any(ResultadoDeAnalisis.class));</span>
 
-<span class="fc" id="L254">	}</span>
+<span class="fc" id="L255">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (27/03/2019 15:52:34)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (28/03/2019 13:40:20)</div></body></html>

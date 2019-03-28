@@ -23,7 +23,7 @@ public class EstadisticasDTO {
 		if (cantidadDeDnaHumano == 0 || cantidadDeDnaMutantes == 0) {
 			proporcion =  "";
 		}else {
-			proporcion =  String.valueOf( cantidadDeDnaMutantes/cantidadDeDnaHumano);
+			proporcion =  String.valueOf((double) cantidadDeDnaMutantes/cantidadDeDnaHumano);
 		}
 	}
 

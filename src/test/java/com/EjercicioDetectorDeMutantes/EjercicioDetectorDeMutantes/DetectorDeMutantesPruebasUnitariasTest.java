@@ -3,6 +3,8 @@ package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -98,4 +100,57 @@ public class DetectorDeMutantesPruebasUnitariasTest {
 		assertTrue(analizadorDeDna.esMutante(dna));
 	}
 
+	/**
+	 * Test para comprobar que se generan las cadenas correctas con las diagonales
+	 * de derecha a izquierda
+	 */
+	@Test
+	public void quieroIngresarUnaDNAyQuieroQueElAnalizadorDeDiagonalesDeDerechaAIzquierdaMeDeVuelvaLasCadenasCorrectas() {
+
+		GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha generador = new GeneradorDeCadenasDeDnaDiagonalDeIzquirdaADerecha();
+		String[] dna = { "ATGCG", "TTATG", "AGAAG", "CCCCT", "CCCCT" };
+		List<String> listtaResultado = generador.armarCadenasDeAdn(dna);
+		assertEquals(3, listtaResultado.size());
+		assertTrue(listtaResultado.containsAll(Arrays.asList("CGAC", "CCATG", "CCAG")));
+	}
+
+	/**
+	 * Test para comprobar que se generan las cadenas correctas con las diagonales
+	 * de izquierda a derecha
+	 */
+	@Test
+	public void quieroIngresarUnaDNAyQuieroQueElAnalizadorDeDiagonalesDeIzquierdaADerechaMeDeVuelvaLasCadenasCorrectas() {
+
+		GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda generador = new GeneradorDeCadenasDeDnaDiagonalDeDerechaAIzquierda();
+		String[] dna = { "ATGCG", "TTATG", "AGAAG", "CCCCT", "CCCCT" };
+		List<String> listtaResultado = generador.armarCadenasDeAdn(dna);
+		assertEquals(3, listtaResultado.size());
+		assertTrue(listtaResultado.containsAll(Arrays.asList("TAAT", "TCATA", "CCGT")));
+	}
+
+	/**
+	 * Test para comprobar que se generan las cadenas correctas de manera horizontal
+	 */
+	@Test
+	public void quieroIngresarUnaDNAyQuieroQueElAnalizadorDeDnaHorizontalMeDeVuelvaLasCadenasCorrectas() {
+
+		GeneradorDeCadenasDeDnaHorizontal generador = new GeneradorDeCadenasDeDnaHorizontal();
+		String[] dna = { "ATGCG", "TTATG", "AGAAG", "CCCCT", "CCCCT" };
+		List<String> listtaResultado = generador.armarCadenasDeAdn(dna);
+		assertEquals(5, listtaResultado.size());
+		assertTrue(listtaResultado.containsAll(Arrays.asList("ATGCG", "TTATG", "AGAAG", "CCCCT", "CCCCT")));
+	}
+
+	/**
+	 * Test para comprobar que se generan las cadenas correctas de manera horizontal
+	 */
+	@Test
+	public void quieroIngresarUnaDNAyQuieroQueElAnalizadorDeDnaVerticalMeDeVuelvaLasCadenasCorrectas() {
+
+		GeneradorDeCadenasDeDnaVertical generador = new GeneradorDeCadenasDeDnaVertical();
+		String[] dna = { "ATGCG", "TTATG", "AGAAG", "CCCCT", "CCCCT" };
+		List<String> listtaResultado = generador.armarCadenasDeAdn(dna);
+		assertEquals(5, listtaResultado.size());
+		assertTrue(listtaResultado.containsAll(Arrays.asList("ATACC", "TTGCC", "GAACC", "CTACC", "GGGTT")));
+	}
 }
