@@ -1,18 +1,19 @@
-# EjercicioDeMutantesParaML
+# Detector De ADN Mutante
 
-- Descripcion:
+##  Descripcion 📋
 Programa para detección de mutantes a partir de cadenas de ADN que se consultan a través de las Apis REST que expone el mismo. El programa cuenta con una BD en memoria, H2, donde se van registrando todas las consultas y se utiliza para generar las estadísticas.
 
-- Instalacion:
+##  Instalacion 🔧
 Para la instalación se tiene que importar como un proyecto Maven
 
 Paso1:
 
 Paso2:
 
-- Apis REST:
+##  Apis REST:
 
-El programa expone dos servicios.
+El programa expone dos servicios:
+
 /mutants/
 Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C
 {"dna":["GACCCG", "CAGGGC", "TTATGT", "AGAGGT", "TACTGT", "ACCCTG" ]}
