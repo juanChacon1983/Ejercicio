@@ -31,3 +31,9 @@ Servicio GET que devuelve las estadísticas de las consultas realizadas: cantida
 /clear/
 
 Servicio DELETE que hace limpieza de los registros guardados en la BD. Devuelve 200-Ok
+
+##   Test⚙️
+
+El proyecto cuenta con una carpeta que se llama “informeDeCoberturaDeTest”. En la misma abriendo el archivo index.html se puede ver in informe de la cobertura de los test.
+
+También cuenta con una carpeta que se llama “JMetrTest” donde se cuenta el proyecto con el que se realizaron las pruebas de estrés de los servicios.

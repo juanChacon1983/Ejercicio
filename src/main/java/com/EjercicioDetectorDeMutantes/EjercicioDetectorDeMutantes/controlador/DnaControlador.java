@@ -90,6 +90,10 @@ public class DnaControlador {
 		return new ResponseEntity<EstadisticasDTO>(estadisticasDTO, HttpStatus.OK);
 	}
 	
+	/**
+	 * Servicio que elimina todos los registros de la BD
+	 * @return
+	 */
 	@RequestMapping(value = "clear", method = RequestMethod.DELETE, headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity limpiarRegistros() {
 		resultadoDeAnalisisServicios.limpiarTodo();
