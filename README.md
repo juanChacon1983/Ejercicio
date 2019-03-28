@@ -20,13 +20,22 @@ El programa expone tres servicios:
 
 https://detector-de-mutantes.appspot.com/mutant/
 
-Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C
+Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C.
+
+Ejemplo:
 {"dna":["GACCCG", "CAGGGC", "TTATGT", "AGAGGT", "TACTGT", "ACCCTG" ]}
-Devuelve 200-Ok en caso de que se trate de un mutante y 403-Forbidden si se trata de un humano.
+
+El servicio Devuelve 200-Ok en caso de que se trate de un mutante y 403-Forbidden si se trata de un humano.
 
 https://detector-de-mutantes.appspot.com/stats/
 
 Servicio GET que devuelve las estadísticas de las consultas realizadas: cantidad de ADN humano, cantidad de ADN mutante y la proporción del mismo. Devuelve 200-Ok
+
+{
+	cantidadDeDnaMutantes: 40,
+	cantidadDeDnaHumano: 100,
+	proporcion: "0.4"
+}
 
 https://detector-de-mutantes.appspot.com/clear/
 
