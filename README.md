@@ -14,13 +14,16 @@ Paso2:
 
 El programa expone tres servicios:
 
-_/mutants/
-_Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C
+/mutants/
+
+Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C
 {"dna":["GACCCG", "CAGGGC", "TTATGT", "AGAGGT", "TACTGT", "ACCCTG" ]}
 Devuelve 200-Ok en caso de que se trate de un mutante y 403-Forbidden si se trata de un humano.
 
-_/stats/
-_Servicio GET que devuelve las estadísticas de las consultas realizadas: cantidad de ADN humano, cantidad de ADN mutante y la proporción del mismo. Devuelve 200-Ok
+/stats/
 
-_/clear/
-_Servicio DELETE que hace limpieza de los registros guardados en la BD. Devuelve 200-Ok
+Servicio GET que devuelve las estadísticas de las consultas realizadas: cantidad de ADN humano, cantidad de ADN mutante y la proporción del mismo. Devuelve 200-Ok
+
+/clear/
+
+Servicio DELETE que hace limpieza de los registros guardados en la BD. Devuelve 200-Ok
