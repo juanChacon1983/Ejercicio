@@ -8,7 +8,11 @@ Para la instalación se tiene que importar como un proyecto Maven
 
 Paso1:
 
+![ScreenShot](https://github.com/juanChacon1983/imagenes/blob/master/paso1.png)
+
 Paso2:
+
+![ScreenShot](https://github.com/juanChacon1983/imagenes/blob/master/paso2.png)
 
 ##  Apis REST:
 
