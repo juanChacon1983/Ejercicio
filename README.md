@@ -1,1 +1,25 @@
 # EjercicioDeMutantesParaML
+
+- Descripcion:
+Programa para detección de mutantes a partir de cadenas de ADN que se consultan a través de las Apis REST que expone el mismo. El programa cuenta con una BD en memoria, H2, donde se van registrando todas las consultas y se utiliza para generar las estadísticas.
+
+- Instalacion:
+Para la instalación se tiene que importar como un proyecto Maven
+
+Paso1:
+
+Paso2:
+
+- Apis REST:
+
+El programa expone dos servicios.
+/mutants/
+Servicio POST que recibe una cadena de ADN con el siguiente formato donde las únicas letras posibles que la pueden formar son G,C,T,C
+{"dna":["GACCCG", "CAGGGC", "TTATGT", "AGAGGT", "TACTGT", "ACCCTG" ]}
+Devuelve 200-Ok en caso de que se trate de un mutante y 403-Forbidden si se trata de un humano.
+
+/stats/
+Servicio GET que devuelve las estadísticas de las consultas realizadas: cantidad de ADN humano, cantidad de ADN mutante y la proporción del mismo. Devuelve 200-Ok
+
+/clear/
+Servicio DELETE que hace limpieza de los registros guardados en la BD. Devuelve 200-Ok

@@ -53,16 +53,18 @@ public class DnaControlador {
 	@RequestMapping(value = "mutant", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity analizarDna(@Valid @RequestBody DnaDTO dnaDTO) {
 
-		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios.consultaPorCadenaDeDna(dnaDTO.getDna().toString());
+		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios
+				.consultaPorCadenaDeDna(dnaDTO.getDna().toString());
 		if (resultadoDeAnalisis == null) {
 			try {
-				resultadoDeAnalisis = new ResultadoDeAnalisis(dnaDTO.getDna().toString(),detectorDeMutantes.esMutante(dnaDTO.getDna().toArray(new String[dnaDTO.getDna().size()])));
+				resultadoDeAnalisis = new ResultadoDeAnalisis(dnaDTO.getDna().toString(),
+						detectorDeMutantes.esMutante(dnaDTO.getDna().toArray(new String[dnaDTO.getDna().size()])));
 				resultadoDeAnalisisServicios.guardar(resultadoDeAnalisis);
 				if (resultadoDeAnalisis.esMutante()) {
 					return new ResponseEntity(HttpStatus.OK);
 				}
 				return new ResponseEntity(HttpStatus.FORBIDDEN);
-				
+
 			} catch (CadenaDeDiferentesTamañosException | DnaMalFormadoException e) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 			}
@@ -78,16 +80,20 @@ public class DnaControlador {
 	 * @return
 	 */
 	@RequestMapping(value = "stats", method = RequestMethod.GET, headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity consultas() {
+	public ResponseEntity<EstadisticasDTO> consultas() {
 
 		List<ResultadoDeAnalisis> listaDeResultados = resultadoDeAnalisisServicios.listar();
-
-		EstadisticasDTO estadisticasDTO = new EstadisticasDTO();
-		estadisticasDTO.setCount_mutant_dna((int) listaDeResultados.stream()
-				.filter((ResultadoDeAnalisis) -> ResultadoDeAnalisis.esMutante()).count());
-		estadisticasDTO.setCount_human_dna(listaDeResultados.size() - estadisticasDTO.getCount_mutant_dna());
-		estadisticasDTO.calcularRatio();
+		int cantdadDeMutantes = (int) listaDeResultados.stream()
+				.filter((ResultadoDeAnalisis) -> ResultadoDeAnalisis.esMutante()).count();
+		EstadisticasDTO estadisticasDTO = new EstadisticasDTO(cantdadDeMutantes,
+				listaDeResultados.size() - cantdadDeMutantes);
 		return new ResponseEntity<EstadisticasDTO>(estadisticasDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "clear", method = RequestMethod.DELETE, headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity limpiarRegistros() {
+		resultadoDeAnalisisServicios.limpiarTodo();
+		return new ResponseEntity( HttpStatus.OK);
 	}
 
 	/**

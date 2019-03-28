@@ -33,4 +33,8 @@ public class ResultadoDeAnalisisServicios {
 	public void eliminar(ResultadoDeAnalisis resultadoDeAnalisis) {
 		resultadoDeAnalisisRepositorio.delete(resultadoDeAnalisis);
 	}
+	
+	public void limpiarTodo( ) {
+		resultadoDeAnalisisRepositorio.deleteAll();
+	}
 }

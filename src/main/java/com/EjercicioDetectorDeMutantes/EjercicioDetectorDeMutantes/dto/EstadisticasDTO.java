@@ -8,35 +8,22 @@ package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.dto;
  */
 public class EstadisticasDTO {
 
-	private int cantidadDeDnaMutantes;
-	private int cantidadDeDnaHumano;
-	private long proporcion;
+	public int cantidadDeDnaMutantes;
+	public int cantidadDeDnaHumano;
+	public String proporcion;
 
-	public int getCount_mutant_dna() {
-		return cantidadDeDnaMutantes;
+	
+	public EstadisticasDTO (int cantM, int cantH) {
+		cantidadDeDnaMutantes = cantM;
+		cantidadDeDnaHumano = cantH;
+		calcularPropocion ();
 	}
-
-	public void setCount_mutant_dna(int count_mutant_dna) {
-		this.cantidadDeDnaMutantes = count_mutant_dna;
-	}
-
-	public int getCount_human_dna() {
-		return cantidadDeDnaHumano;
-	}
-
-	public void setCount_human_dna(int count_human_dna) {
-		this.cantidadDeDnaHumano = count_human_dna;
-	}
-
-	public long getRatio() {
-		return proporcion;
-	}
-
-	public void calcularRatio() {
-		if (cantidadDeDnaHumano == 0) {
-			this.proporcion = 0;
-		} else {
-			this.proporcion = cantidadDeDnaMutantes / cantidadDeDnaHumano;
+	
+	private void calcularPropocion () {
+		if (cantidadDeDnaHumano == 0 || cantidadDeDnaMutantes == 0) {
+			proporcion =  "";
+		}else {
+			proporcion =  String.valueOf( cantidadDeDnaMutantes/cantidadDeDnaHumano);
 		}
 	}
 
