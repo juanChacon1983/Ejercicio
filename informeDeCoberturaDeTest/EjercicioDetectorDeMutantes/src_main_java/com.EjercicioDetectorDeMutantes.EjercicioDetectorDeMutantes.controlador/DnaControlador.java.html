@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DnaControlador.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (28/03/2019 13:40:20)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.controlador</a> &gt; <span class="el_source">DnaControlador.java</span></div><h1>DnaControlador.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.controlador;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.Servicios.ResultadoDeAnalisisServicios;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.dto.DnaDTO;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.dto.EstadisticasDTO;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.CadenaDeDiferentesTamañosException;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.DnaMalFormadoException;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.AnalizadorDeDna;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.ResultadoDeAnalisis;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.util.ErrorInfo;
+
+/**
+ * Capa de controlador de la clae Resultado de analisis
+ * 
+ * @author jchacon
+ *
+ */
+@RestController
+@RequestMapping(&quot;/&quot;)
+<span class="fc" id="L39">public class DnaControlador {</span>
+
+	@Autowired
+	ResultadoDeAnalisisServicios resultadoDeAnalisisServicios;
+
+	@Autowired
+	AnalizadorDeDna detectorDeMutantes;
+
+	/**
+	 * Servicio que analiza el dna y lo guarda en la BD.
+	 * 
+	 * @param dnaDTO
+	 * @return
+	 */
+	@RequestMapping(value = &quot;mutant&quot;, method = RequestMethod.POST, headers = &quot;Accept=application/json&quot;)
+	public ResponseEntity analizarDna(@Valid @RequestBody DnaDTO dnaDTO) {
+
+<span class="fc" id="L56">		ResultadoDeAnalisis resultadoDeAnalisis = resultadoDeAnalisisServicios</span>
+<span class="fc" id="L57">				.consultaPorCadenaDeDna(dnaDTO.getDna().toString());</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (resultadoDeAnalisis == null) {</span>
+			try {
+<span class="fc" id="L60">				resultadoDeAnalisis = new ResultadoDeAnalisis(dnaDTO.getDna().toString(),</span>
+<span class="fc" id="L61">						detectorDeMutantes.esMutante(dnaDTO.getDna().toArray(new String[dnaDTO.getDna().size()])));</span>
+<span class="fc" id="L62">				resultadoDeAnalisisServicios.guardar(resultadoDeAnalisis);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">				if (resultadoDeAnalisis.esMutante()) {</span>
+<span class="fc" id="L64">					return new ResponseEntity(HttpStatus.OK);</span>
+				}
+<span class="fc" id="L66">				return new ResponseEntity(HttpStatus.FORBIDDEN);</span>
+
+<span class="fc" id="L68">			} catch (CadenaDeDiferentesTamañosException | DnaMalFormadoException e) {</span>
+<span class="fc" id="L69">				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+			}
+		}
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (resultadoDeAnalisis.esMutante())</span>
+<span class="fc" id="L73">			return new ResponseEntity(HttpStatus.OK);</span>
+<span class="nc" id="L74">		return new ResponseEntity(HttpStatus.FORBIDDEN);</span>
+	}
+
+	/**
+	 * Servicio que devuelve las metricas de los Dna analizados hasta el momento
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = &quot;stats&quot;, method = RequestMethod.GET, headers = &quot;Accept=application/json&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;EstadisticasDTO&gt; consultas() {
+
+<span class="fc" id="L85">		List&lt;ResultadoDeAnalisis&gt; listaDeResultados = resultadoDeAnalisisServicios.listar();</span>
+<span class="fc" id="L86">		int cantdadDeMutantes = (int) listaDeResultados.stream()</span>
+<span class="fc" id="L87">				.filter((ResultadoDeAnalisis) -&gt; ResultadoDeAnalisis.esMutante()).count();</span>
+<span class="fc" id="L88">		EstadisticasDTO estadisticasDTO = new EstadisticasDTO(cantdadDeMutantes,</span>
+<span class="fc" id="L89">				listaDeResultados.size() - cantdadDeMutantes);</span>
+<span class="fc" id="L90">		return new ResponseEntity&lt;EstadisticasDTO&gt;(estadisticasDTO, HttpStatus.OK);</span>
+	}
+	
+	/**
+	 * Servicio que elimina todos los registros de la BD
+	 * @return
+	 */
+	@RequestMapping(value = &quot;clear&quot;, method = RequestMethod.DELETE, headers = &quot;Accept=application/json&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity limpiarRegistros() {
+<span class="nc" id="L99">		resultadoDeAnalisisServicios.limpiarTodo();</span>
+<span class="nc" id="L100">		return new ResponseEntity( HttpStatus.OK);</span>
+	}
+
+	/**
+	 * metodo para darle formato cuando se produce una excepcion de tipo
+	 * MethodArgumentNotValidException
+	 * 
+	 * @param request
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity&lt;ErrorInfo&gt; methodArgumentNotValidException(HttpServletRequest request,
+			MethodArgumentNotValidException e) {
+
+<span class="fc" id="L115">		BindingResult result = e.getBindingResult();</span>
+<span class="fc" id="L116">		List&lt;FieldError&gt; fieldErrors = result.getFieldErrors();</span>
+
+<span class="fc" id="L118">		StringBuilder errorMessage = new StringBuilder();</span>
+<span class="fc" id="L119">		fieldErrors.forEach(f -&gt; errorMessage.append(f.getDefaultMessage()));</span>
+
+<span class="fc" id="L121">		ErrorInfo errorInfo = new ErrorInfo(HttpStatus.BAD_REQUEST.value(), &quot;Bad Request&quot;, errorMessage.toString(),</span>
+<span class="fc" id="L122">				request.getRequestURI());</span>
+<span class="fc" id="L123">		return new ResponseEntity&lt;&gt;(errorInfo, HttpStatus.BAD_REQUEST);</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (28/03/2019 13:40:20)</div></body></html>

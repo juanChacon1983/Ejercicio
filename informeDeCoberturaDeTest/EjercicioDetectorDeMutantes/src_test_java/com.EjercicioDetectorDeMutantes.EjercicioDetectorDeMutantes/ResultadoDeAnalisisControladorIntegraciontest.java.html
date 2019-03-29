@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResultadoDeAnalisisControladorIntegraciontest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (28/03/2019 13:40:20)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes</a> &gt; <span class="el_source">ResultadoDeAnalisisControladorIntegraciontest.java</span></div><h1>ResultadoDeAnalisisControladorIntegraciontest.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.Servicios.ResultadoDeAnalisisServicios;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.controlador.DnaControlador;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.dto.DnaDTO;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.ResultadoDeAnalisis;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.repositorio.ResultadoDeAnalisisRepositorio;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+ 
+
+/**
+ * Clase para testear la capa de controlador
+ * 
+ * @author jchacon
+ *
+ */
+@RunWith(SpringRunner.class)
+@WebMvcTest(DnaControlador.class)
+<span class="fc" id="L44">public class ResultadoDeAnalisisControladorIntegraciontest {</span>
+
+	@Autowired
+	private MockMvc mvc;
+
+	@MockBean
+	private ResultadoDeAnalisisServicios resultadoDeAnalisisServicios;
+
+	@MockBean
+	private ResultadoDeAnalisisRepositorio resultadoDeAnalisisRepositorio;
+
+	/**
+	 * Configuracion inicial antes de comenzar los test
+	 */
+	@Before
+	public void setUp() {
+
+<span class="fc" id="L61">		ResultadoDeAnalisis resultadoDeAnalisis = new ResultadoDeAnalisis();</span>
+<span class="fc" id="L62">		resultadoDeAnalisis.setId(1);</span>
+<span class="fc" id="L63">		resultadoDeAnalisis.setDna(&quot;ATGCGAG&quot;);</span>
+<span class="fc" id="L64">		resultadoDeAnalisis.setEsMutante(true);</span>
+
+<span class="fc" id="L66">		ResultadoDeAnalisis otroResultadoDeAnalisis = new ResultadoDeAnalisis();</span>
+<span class="fc" id="L67">		otroResultadoDeAnalisis.setId(2);</span>
+<span class="fc" id="L68">		otroResultadoDeAnalisis.setDna(&quot;ATGCGA&quot;);</span>
+<span class="fc" id="L69">		otroResultadoDeAnalisis.setEsMutante(true);</span>
+
+<span class="fc" id="L71">		ResultadoDeAnalisis otroResultadoDeAnalisisMas = new ResultadoDeAnalisis();</span>
+<span class="fc" id="L72">		otroResultadoDeAnalisisMas.setId(3);</span>
+<span class="fc" id="L73">		otroResultadoDeAnalisisMas.setDna(&quot;ATGCGA&quot;);</span>
+<span class="fc" id="L74">		otroResultadoDeAnalisisMas.setEsMutante(false);</span>
+
+<span class="fc" id="L76">		List&lt;ResultadoDeAnalisis&gt; listaDeResultados = new ArrayList&lt;ResultadoDeAnalisis&gt;(</span>
+<span class="fc" id="L77">				Arrays.asList(resultadoDeAnalisis, otroResultadoDeAnalisis, otroResultadoDeAnalisisMas));</span>
+
+<span class="fc" id="L79">		Mockito.when(resultadoDeAnalisisServicios.listar()).thenReturn(listaDeResultados);</span>
+			
+<span class="fc" id="L81">		Mockito.when(resultadoDeAnalisisServicios.consultaPorCadenaDeDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;).toString())).thenReturn(resultadoDeAnalisis);</span>
+ 
+
+<span class="fc" id="L84">	}</span>
+
+	/**
+	 * Se analiza DNA mutante y el servicio devuelve HTTP 200-OK
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngresarUnDnaYQueMeDevuelvaQueEsMutanteTest() throws Exception {
+
+<span class="fc" id="L93">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L95">		DnaDTO dnaDTO = new DnaDTO();</span>
+		//dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTT&quot;));
+<span class="fc" id="L97">		dnaDTO.setDna(Arrays.asList(&quot;AAAAGGGG&quot;,&quot;ATGCGAGA&quot;,&quot;ATGCGATT&quot;,&quot;ATGCGGGG&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot;,&quot;ATGCGAAA&quot; ,&quot;ATGCGTCC&quot;));</span>
+		 
+<span class="fc" id="L99">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L100">				.andExpect(status().isOk());</span>
+
+<span class="fc" id="L102">	}</span>
+
+	/**
+	 * Se analiza un DNA humano y el servicio devuelve 403-Forbidden
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngresarUnDnaYQueMeDevuelvaQueEsHumanoTest() throws Exception {
+
+<span class="fc" id="L111">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L113">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L114">		dnaDTO.setDna(Arrays.asList(&quot;ATGC&quot;, &quot;CAGT&quot;, &quot;TTAT&quot;, &quot;TTAT&quot;));</span>
+
+<span class="fc" id="L116">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L117">				.andExpect(status().isForbidden());</span>
+
+<span class="fc" id="L119">	}</span>
+
+	/**
+	 * Valida que no se puedan ingresar letras no permitidas
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngrsarUnDnaConLetrasInvalidasYQueMeDevuelvaBadRequestTest() throws Exception {
+
+<span class="fc" id="L128">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L130">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L131">		dnaDTO.setDna(Arrays.asList(&quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;, &quot;JJJJ&quot;));</span>
+
+<span class="fc" id="L133">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L134">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L135">				.compareTo(&quot;las unicas letras permitidas son A,T,C,G y la lista no puede estar vacialas unicas letras permitidas son A,T,C,G&quot;);</span>
+
+<span class="fc" id="L137">	}</span>
+
+	/**
+	 * Valida que no se puedan ingresar cadenas que contengan menos letras que la cantidad de palabras
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngrsarUnDnaConMenosPalabrasQueCantidadDeLetrasPorPalabrasYQueMeDevuelvaBadRequestTest() throws Exception {
+
+<span class="fc" id="L146">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L148">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L149">		dnaDTO.setDna(Arrays.asList(&quot;ATGGG&quot;, &quot;CAGGG&quot;, &quot;TTAGG&quot;, &quot;TTAGG&quot;));</span>
+
+<span class="fc" id="L151">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L152">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L153">				.compareTo(&quot;el dna tiene que ser igual a la cantidad de palabras que lo componen&quot;);</span>
+
+<span class="fc" id="L155">	}</span>
+
+	/**
+	 * valida que las palabras tengan por lo menos 4 caracteres
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngrsarUnDnaConPalabrasDeMenosDeCuatroLetrasYQueMeDevuelvaBadRequestTest() throws Exception {
+
+<span class="fc" id="L164">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L166">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L167">		dnaDTO.setDna(Arrays.asList(&quot;ATG&quot;, &quot;CAG&quot;, &quot;TGG&quot;, &quot;TTG&quot;));</span>
+
+<span class="fc" id="L169">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L170">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L171">				.compareTo(&quot;El tamaño minimo de las cadenas es 4 caracteres&quot;);</span>
+ 
+<span class="fc" id="L173">	}</span>
+
+	/**
+	 * valida que se tenga que envias si o si una cadenas
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngrsarUnDnVacioYQueMeDevuelvaBadRequestTest() throws Exception {
+
+<span class="fc" id="L182">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L184">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L185">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L186">				.andExpect(status().isBadRequest());</span>
+
+<span class="fc" id="L188">	}</span>
+
+	/**
+	 * valida que no se puedan mandar DNA formad por palabras de diferente tamaño
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngrsarUnDnaConPalabrasDeDiferentesTamañosYQueMeDevuelvaBadRequestTest() throws Exception {
+
+<span class="fc" id="L197">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L199">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L200">		dnaDTO.setDna(Arrays.asList(&quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGGG&quot;, &quot;CAGG&quot;));</span>
+
+<span class="fc" id="L202">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L203">				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage()</span>
+<span class="fc" id="L204">				.compareTo(&quot;El tamaño de las cadenas de adn tiene que ser igual&quot;);</span>
+
+<span class="fc" id="L206">	}</span>
+	
+	/**
+	 * Valida que si consulta dos veces la misma cadena devuelve el mismo resultado
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroIngresarDosVecesElMismoDnaYDaElMismoResultadoBDTest() throws Exception {
+
+<span class="fc" id="L215">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L217">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L218">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
+
+<span class="fc" id="L220">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L221">				.andExpect(status().isOk());</span>
+		
+<span class="fc" id="L223">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L224">		.andExpect(status().isOk());</span>
+		
+<span class="fc" id="L226">	}</span>
+	
+	/**
+	 * Valida que el servicio de los stats devuelve 400
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroConsultarLasEstadisticasYQueMeDevuelva200OKTest() throws Exception {
+<span class="fc" id="L234">		mvc.perform(get(&quot;/stats&quot;).contentType(MediaType.APPLICATION_JSON_VALUE))</span>
+<span class="fc" id="L235">		 .andExpect(status().isOk());</span>
+<span class="fc" id="L236">	}</span>
+	
+	/**
+	 * Valida que cuando ejecuto un servicio que ya existe en la BD no vuelva a hacer el calculo y me devuelva el resultado anterior
+	 * @throws Exception
+	 */
+	@Test
+	public void quieroQueCuandoIngreseUnDnaQueExisteEnLaBDNoloGuardeNuevamenteTest() throws Exception {
+
+<span class="fc" id="L245">		ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="fc" id="L247">		DnaDTO dnaDTO = new DnaDTO();</span>
+<span class="fc" id="L248">		dnaDTO.setDna(Arrays.asList(&quot;ATGCGA&quot;, &quot;CAGTGC&quot;, &quot;TTATGT&quot;, &quot;AGAAGG&quot;, &quot;CCCCTA&quot;, &quot;TCACTG&quot;));</span>
+
+<span class="fc" id="L250">		mvc.perform(post(&quot;/mutant&quot;).content(mapper.writeValueAsString(dnaDTO)).contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L251">				.andExpect(status().isOk());</span>
+		
+<span class="fc" id="L253">		Mockito.verify(resultadoDeAnalisisServicios, times(0)).guardar(Mockito.any(ResultadoDeAnalisis.class));</span>
+
+<span class="fc" id="L255">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (28/03/2019 13:40:20)</div></body></html>

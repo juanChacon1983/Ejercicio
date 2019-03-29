@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GeneradorDeCadenasDeDnaVertical.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (28/03/2019 13:40:20)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo</a> &gt; <span class="el_source">GeneradorDeCadenasDeDnaVertical.java</span></div><h1>GeneradorDeCadenasDeDnaVertical.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+<span class="fc" id="L8">public class GeneradorDeCadenasDeDnaVertical extends  GeneradorDeCadenasDeDna{</span>
+
+ 
+	@Override
+	public List&lt;String&gt; armarCadenasDeAdn(String[] dna) {
+<span class="fc" id="L13">		List&lt;String&gt; listaDeCadenas = new ArrayList&lt;String&gt;();</span>
+		
+<span class="fc" id="L15">		char[][] matrizTemporal = generarMatriz (dna);</span>
+		
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		for (int i = 0; i &lt; matrizTemporal.length; i++) {</span>
+<span class="fc" id="L18">			StringBuffer temp = new StringBuffer();</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">			for (int j = 0; j &lt; matrizTemporal.length; j++) {</span>
+<span class="fc" id="L20">				temp.append(matrizTemporal[j][i]);</span>
+			}
+<span class="fc" id="L22">			listaDeCadenas.add(temp.toString());</span>
+		}
+		
+<span class="fc" id="L25">		return listaDeCadenas;</span>
+	}
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (28/03/2019 13:40:20)</div></body></html>

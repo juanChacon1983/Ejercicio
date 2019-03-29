@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AnalizadorDeDna.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (28/03/2019 13:40:20)</a> &gt; <a href="../../index.html" class="el_group">EjercicioDetectorDeMutantes</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo</a> &gt; <span class="el_source">AnalizadorDeDna.java</span></div><h1>AnalizadorDeDna.java</h1><pre class="source lang-java linenums">package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.CadenaDeDiferentesTamañosException;
+import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.excepciones.DnaMalFormadoException;
+
+/**
+ * Clase encargada de analizar los DNA
+ * 
+ * @author jchacon
+ *
+ */
+public class AnalizadorDeDna {
+
+	/**
+	 * Lista de generadores de cadenas para ser analizadas
+	 */
+	@Autowired
+	List&lt;GeneradorDeCadenasDeDna&gt; listaDeGeneradoresdeCadenas;
+
+<span class="fc" id="L26">	public AnalizadorDeDna() {</span>
+
+<span class="fc" id="L28">	}</span>
+
+<span class="fc" id="L30">	public AnalizadorDeDna(List&lt;GeneradorDeCadenasDeDna&gt; listaDeGeneradoresdeCadenas) {</span>
+<span class="fc" id="L31">		this.listaDeGeneradoresdeCadenas = listaDeGeneradoresdeCadenas;</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * Analiza si el DNA ingresado es mutante o humano
+	 * 
+	 * @param dnaParaAnalizar arreglo de String que se va a analizar
+	 * @return devuelve verdadero si el Dna es mutante y Falso si el Dna es humano
+	 * @throws CadenaDeDiferentesTamañosException se lanza cuando se valida que el
+	 *                                            Dna esta formado por palabras de
+	 *                                            diferentes tamaños
+	 * @throws DnaMalFormadoException             se lanza cuando el Dna esta mal
+	 *                                            formado
+	 */
+	public boolean esMutante(String[] dnaParaAnalizar)
+			throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+
+<span class="fc" id="L48">		validarTamañoDeLosElementos(dnaParaAnalizar);</span>
+
+<span class="fc" id="L50">		int cantidadDeCadenas = 0;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		for (GeneradorDeCadenasDeDna generadorDeCadenasDeAdn : listaDeGeneradoresdeCadenas) {</span>
+
+<span class="fc" id="L53">			List&lt;String&gt; listaDeCadenas = generadorDeCadenasDeAdn.armarCadenasDeAdn(dnaParaAnalizar);</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			for (String cadenaDeAdn : listaDeCadenas) {</span>
+<span class="fc" id="L56">				cantidadDeCadenas = cantidadDeCadenas + analizarCadena(cadenaDeAdn, cantidadDeCadenas);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				if (cantidadDeCadenas == 2) {</span>
+<span class="fc" id="L58">					return true;</span>
+				}
+			}
+		}
+<span class="fc" id="L62">		return false;</span>
+	}
+
+	/**
+	 * Recibe y cuenta hasta dos ocurrencias grupos de 4 letras iguales.
+	 * 
+	 * @param cadena          string para analizar
+	 * @param posicionInicial lugar desde donde se comienza a analizar el arreglo de
+	 *                        letras
+	 * @param cantidadActual  cantidad de cuatro letras consecutivas que se
+	 *                        encontraron
+	 * @return
+	 */
+	private int analizarCadena(String cadena, int cantidadActual) {
+<span class="fc" id="L76">		String regex = &quot;(.)\\1{3}&quot;;</span>
+<span class="fc" id="L77">		int cadenasEncontradas = 0;</span>
+<span class="fc" id="L78">		Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);</span>
+<span class="fc" id="L79">		Matcher matcher = pattern.matcher(cadena);</span>
+
+<span class="pc bpc" id="L81" title="1 of 4 branches missed.">		while (matcher.find() &amp;&amp; cadenasEncontradas+cantidadActual != 2) {</span>
+<span class="fc" id="L82">			cadenasEncontradas = cadenasEncontradas+1;</span>
+		}
+<span class="fc" id="L84">		return cadenasEncontradas;</span>
+	};
+
+	/**
+	 * Valida que el Dna a analizar es correcto
+	 * 
+	 * @param dna
+	 * @throws CadenaDeDiferentesTamañosException se lanza cuando se valida que el
+	 *                                            Dna esta formado por palabras de
+	 *                                            diferentes tamaños
+	 * @throws DnaMalFormadoException             se lanza cuando el Dna esta mal
+	 *                                            formado
+	 */
+	private void validarTamañoDeLosElementos(String[] dna)
+			throws CadenaDeDiferentesTamañosException, DnaMalFormadoException {
+<span class="fc" id="L99">		int tamaño = dna[0].length();</span>
+
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (String string : dna) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (string.length() != tamaño)</span>
+<span class="fc" id="L103">				throw new CadenaDeDiferentesTamañosException();</span>
+		}
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (tamaño != dna.length)</span>
+<span class="fc" id="L107">			throw new DnaMalFormadoException();</span>
+
+<span class="fc" id="L109">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>java (28/03/2019 13:40:20)</div></body></html>
