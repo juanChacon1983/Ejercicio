@@ -3,6 +3,7 @@ package com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.Servicios;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.ResultadoDeAnalisis;
@@ -22,6 +23,7 @@ public class ResultadoDeAnalisisServicios {
 		return resultadoDeAnalisisRepositorio.findById(id);
 	}
 	
+	@Cacheable("consultaPorCadenaDeDna")
 	public ResultadoDeAnalisis consultaPorCadenaDeDna(String dna) {
 		return resultadoDeAnalisisRepositorio.findByDna(dna);
 	}
