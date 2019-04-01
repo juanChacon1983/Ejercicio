@@ -17,7 +17,6 @@ import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.Genera
 import com.EjercicioDetectorDeMutantes.EjercicioDetectorDeMutantes.modelo.GeneradorDeCadenasDeDnaVertical;
 
 @SpringBootApplication
-@EnableCaching
 public class EjercicioDetectorDeMutantesApplication {
 
 	public static void main(String[] args) {

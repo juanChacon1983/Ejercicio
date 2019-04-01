@@ -23,7 +23,6 @@ public class ResultadoDeAnalisisServicios {
 		return resultadoDeAnalisisRepositorio.findById(id);
 	}
 	
-	@Cacheable("consultaPorCadenaDeDna")
 	public ResultadoDeAnalisis consultaPorCadenaDeDna(String dna) {
 		return resultadoDeAnalisisRepositorio.findByDna(dna);
 	}
